@@ -1,6 +1,8 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from api.tools.classify import classify_wallet
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI
 
 # Create FastAPI instance
 app = FastAPI(
@@ -9,6 +11,21 @@ app = FastAPI(
     docs_url="/api/docs",           # Swagger UI
     openapi_url="/api/openapi.json" # OpenAPI schema
 )
+
+# Allow frontend origins (during development allow localhost:3000)
+origins = [
+    "https://ethxpose.vercel.app",
+    "https://ethxpose-frontend.vercel.app",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,   # or ["*"] to allow all origins (not recommended in prod)
+    allow_credentials=True,
+    allow_methods=["*"],     # allow all HTTP methods
+    allow_headers=["*"],     # allow all headers
+)
+
 # Define data models
 class Node(BaseModel):
     id: str
