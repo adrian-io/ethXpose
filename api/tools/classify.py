@@ -100,9 +100,9 @@ def classify_wallet(wallet_address: str, model_name: str) -> Union[Tuple[float, 
                  for node in graph.nodes]
         edges = [{"source": str(source), 
                   "target": str(target), 
-                  "value": edge_data.get("Value", 0), 
+                  "value": edge_data["Value"] if "Value" in edge_data else None,  # Ensure value is only added if it exists
                   "timestamp": format_timestamp(edge_data.get("TimeStamp", "N/A"))}
-                 for source, target, edge_data in graph.edges(data=True)]
+                 for source, target, edge_data in graph.edges(data=True) if "Value" in edge_data]  # Avoid adding edges with no value
 
         graph_data = {"nodes": nodes, "edges": edges}
 
