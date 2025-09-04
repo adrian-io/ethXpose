@@ -1,4 +1,4 @@
-# ETHXpose - Ethereum Wallet Fraud Detection API
+# EthXpose - Ethereum Wallet Fraud Detection API
 
 ## Abstract
 
